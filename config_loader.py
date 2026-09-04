@@ -1,6 +1,6 @@
 # config_loader.py
-# Liest settings.cfg. Selbst geschrieben, weil uns ConfigParser 2013 "zu kompliziert" war.
-# (Reads settings.cfg. Hand-rolled, because ConfigParser felt "too complicated" in 2013.)
+# Reads settings.cfg.
+# Hand-rolled because ConfigParser felt "too complicated" in 2013.
 
 SETTINGS_FILE = "settings.cfg"
 
@@ -14,31 +14,35 @@ KNOWN_KEYS = [
 ]
 
 
-def load_settings(path=None):
-    if path == None:
+def load_settings(path: str | None = None) -> dict:
+    """Load key/value pairs from settings.cfg (or *path*) and return them as a dict.
+
+    Unknown keys are silently dropped so a typo in the file never raises an error —
+    a known limitation inherited from the original design.
+    """
+    if path is None:
         path = SETTINGS_FILE
-    settings = {}
+    settings: dict = {}
     f = open(path)
     for line in f.readlines():
         line = line.strip()
-        if line == "":
+        if not line:
             continue
         if line.startswith("#"):
             continue
         if "=" not in line:
-            continue                    # kaputte Zeile? Einfach weiter. (Broken line? Just carry on.)
+            continue
         parts = line.split("=")
         key = parts[0].strip()
         value = parts[1].strip()
-        # Unbekannte Schluessel werden stillschweigend ignoriert. Ein Tippfehler im cfg
-        # faellt also NIE auf. (Unknown keys are silently dropped, so a typo never surfaces.)
         if key in KNOWN_KEYS:
-            settings[key] = value       # everything stays a string, the callers deal with it
+            settings[key] = value       # everything stays a string; callers convert
     f.close()
     return settings
 
 
-def get_int(settings, key, fallback):
+def get_int(settings: dict, key: str, fallback: int) -> int:
+    """Return *key* from *settings* as an int, or *fallback* if absent or non-numeric."""
     if key in settings:
         try:
             return int(settings[key])
@@ -47,8 +51,6 @@ def get_int(settings, key, fallback):
     return fallback
 
 
-def get_setting(settings, key, fallback=""):
-    # Duplikat von dict.get -- war schon 2013 ueberfluessig. (A duplicate of dict.get.)
-    if key in settings:
-        return settings[key]
-    return fallback
+def get_setting(settings: dict, key: str, fallback: str = "") -> str:
+    """Return *key* from *settings*, or *fallback* if absent."""
+    return settings.get(key, fallback)
