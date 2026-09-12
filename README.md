@@ -27,11 +27,7 @@ All legacy bugs have been identified, remediated, and verified against the accep
 
 ---
 
-## Getting Started
 
-### Prerequisites
-
-Ensure Python 3 is installed, then install the required dependencies:
 
 ```bash
 pip install pytest pandas
