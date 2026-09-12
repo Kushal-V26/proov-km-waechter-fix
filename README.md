@@ -1,46 +1,37 @@
-# The Legacy Fix — a ProoV Guided Project, powered by IBM Bob
+# KM-Wächter — Fleet Maintenance & Health Monitoring Service
 
-This repo is the starting point of [The Legacy Fix](https://projectstudy.in/explore/experience-legacy-fix), a ProoV
-challenge. You are fixing **KM-Wächter**, the service that decides when each of Vossberg
-Mobility's 6,000 cars needs a service and prints the nightly fleet-health report. It has
-hidden bugs, several tests fail, and the code is written in an old style. Your job is to
-fix and modernize it — with IBM Bob (or another AI coding agent; another agent works just
-as well) doing the heavy lifting while you direct and audit it.
+A modernized, refactored maintenance scheduling and fleet-health reporting service for Vossberg Mobility's vehicle fleet. Originally completed as part of [The Legacy Fix](https://projectstudy.in/explore/experience-legacy-fix) guided project with IBM Bob.
 
-> **Fictional company disclaimer.** Vossberg Mobility and KM-Wächter are invented for
-> teaching and are labelled as such in-app. They are not a real company. Industry figures
-> referenced in the accompanying brief come from public sources.
-
-## How to run
-
-You do not need Python installed to do this task — your AI agent can run all of this for
-you. If you do want to run it yourself, you need `python3`:
-
-```
-pip install pytest pandas
-pytest          # the test suite (currently red)
-python verify.py  # your acceptance check: is the job actually done?
-```
-
-The test suite is **red on purpose** — that is the starting point of the task, not a bug in
-this template.
-
-## What's in this repo
-
-- **`TASK.md`** — your mission brief. Read this first; it has every step of the task,
-  what NOT to change, and how to hand the work back in.
-- **`verify.py`** — your own acceptance check. It does not grade you — it tells you,
-  mechanically, whether the job is actually done, so "finished" is something you checked
-  rather than something your AI agent told you. Run `python verify.py` before you hand in.
-- **`km_wachter.py` / `fleet_report.py`** — the two core modules with the hidden bugs.
-- **`config_loader.py` / `fleet_utils.py` / `log_util.py`** — 2013-era helper modules: dated
-  style, dead code, and at least one more quiet problem no test catches.
-- **`settings.cfg`** — the maintenance rules, read at runtime. The values must not change.
-- **`test_km_wachter.py` / `test_fleet_report.py`** — the test suite (currently red).
-- **`analyze.py`** — the "make it smarter" capstone: a data-driven breakdown-risk analysis.
-- **`fleet_history.csv`** — 120 labelled cars for the analysis step.
-- **`NOTES.md`** — write this yourself: what your AI agent got wrong that you caught.
+> **Project Context:** Vossberg Mobility and KM-Wächter are fictional entities created for educational purposes.
 
 ---
 
-This challenge is part of the ProoV project "The Legacy Fix" — https://projectstudy.in/explore/experience-legacy-fix
+## Overview
+
+KM-Wächter processes vehicle telemetry data across a fleet of 6,000 vehicles to:
+1. Determine real-time service eligibility and maintenance urgency based on dynamic mileage and time intervals.
+2. Compile and export nightly fleet-health diagnostics reports.
+3. Perform predictive, data-driven breakdown risk assessments using historical maintenance records.
+
+---
+
+## Status & Key Fixes
+
+All legacy bugs have been identified, remediated, and verified against the acceptance test suite.
+
+* **Core Maintenance Logic (`km_wachter.py`)**: Resolved edge-case interval calculations, boundary threshold comparisons, and status evaluation defects.
+* **Reporting Engine (`fleet_report.py`)**: Fixed aggregate metrics computation, date formatting inconsistencies, and report export formatting.
+* **Legacy Refactoring (`config_loader.py`, `fleet_utils.py`, `log_util.py`)**: Cleaned 2013-era legacy code, eliminated dead routines, and addressed silent runtime configuration pitfalls.
+* **Risk Modeling (`analyze.py`)**: Implemented predictive breakdown-risk analysis over the 120-car labelled dataset (`fleet_history.csv`).
+* **Test Suite & Verification**: All `pytest` unit tests are green, and acceptance verification via `verify.py` passes completely.
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+Ensure Python 3 is installed, then install the required dependencies:
+
+```bash
+pip install pytest pandas
